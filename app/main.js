@@ -1,4 +1,5 @@
 function matchPattern(inputLine, pattern) {
+  let regx = pattern.replace(/\\d/g, '[0-9]').replace(/\\w/g, '[0-9a-zA-z]');
   if (pattern.length === 1) {
     return inputLine.includes(pattern);
   }else if (pattern === '\\d'){
@@ -7,9 +8,10 @@ function matchPattern(inputLine, pattern) {
     return /\w/.test(inputLine);
   }else if (pattern.startsWith('[') && pattern.endsWith(']')){
     let charGroup = pattern.slice(1,-1);
-    let regx = new RegExp(`[${charGroup}]`);
-    return regx.test(inputLine);
+    let newP = new RegExp(`[${charGroup}]`);
+    return newP.test(inputLine);
   }else {
+    return new RegExp(regx).test(inputLine);
     throw new Error(`Unhandled pattern ${pattern}`);
   }
 }
