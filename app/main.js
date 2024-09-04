@@ -5,6 +5,10 @@ function matchPattern(inputLine, pattern) {
     return /\d/.test(inputLine);
   }else if (pattern === '\\w'){
     return /\w/.test(inputLine);
+  }else if (pattern.startsWith('[') && pattern.endsWith(']')){
+    let charGroup = pattern.slice(1,-1);
+    let regx = new RegExp(`[${charGroup}]`);
+    return regx.test(inputLine);
   }else {
     throw new Error(`Unhandled pattern ${pattern}`);
   }
